@@ -25,8 +25,83 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section>
+					<h1>AWS Serverless - DevOps tips</h1>
+					<p>
+						<small>Created by <a href="https://www.linkedin.com/in/barendbootha">Barend Bootha</a></small>
+					</p>
+				</section>
+				<section>
+					<h1>Environments</h1>
+					<ul>
+						<li>Name spacing resources (optional)</li>
+						<li>Separate accounts</li>
+						<li>Lot less drama with security leakage</li>
+						<li>Easier to separate operate</li>
+						<li>Moving between accounts is easy with <strong>cross account roles</strong> for operations</li>
+						<li>Billing can be done from a master account</li>
+					</ul>
+				</section>
+				<section>
+					<img data-src="aws_account_setup.png">
+				</section>
+				<section>
+					<h1>Security</h1>
+					<ul>
+						<li>Get in the habit of locking down resources right from the beginning</li>
+						<li>Try to get a role per process (process being lambda / container process)</li>
+						<li>2FA all the time</li>
+						<li>Avoid using access keys, set policies that expire access keys after a period of time</li>
+						<li>Tools like AWS-VAULT make it really easy to perform CLI commands from developer machines, and have built in functionality to roll access keys</li>
+					</ul>
+				</section>
+				<section>
+					<h1>Serverless</h1>
+					<ul>
+						<li>Serverless library will create a CF stack PER project</li>
+						<li>Splitting your projects into multiple serverless projects can be beneficial when a stack is in a bad state, your entire infrastructure is not in a bad state</li>
+						<li>Serverless layers should be in a separate project</li>
+						<li>Serverless uses CloudFormation and cloudformation can be hard to manage</li>
+						<li>Serverless doesn’t cover all the bases and eventually you’ll need another IaC</li>
+						<li>Generally like to keep my Serverless templates as lean as possible and use another IaC manager to manage resources</li>
+					</ul>
+				</section>
+				<section>
+					<h1>My preferred IaC</h1>
+					<h3>Terraform is my GoTo</h3>
+					<ul>
+						<li>Uses AWS API’s</li>
+						<li>Very very easy</li>
+						<ul>
+							<li>To learn</li>
+							<li>CI/CD</li>
+							<li>Really up to date</li>
+							<li>Cross cloud infrastructure</li>
+							<li>Share resource names etc with Parameter Store when you run into chicken-egg scenario</li>
+						</ul>
+						<li>You have the ability to target modules you want to apply</li>
+						<li>Plays well with CloudFormation</li>
+					</ul>
+				</section>
+				<section>
+					<h1>Lambda's</h1>
+					<ul>
+						<li>Lamba’s are glue in AWS world everything gets glued together with Lamba’s</li>
+						<li>Because of this - create polices / roles per lambda</li>
+						<li>Yes lambda’s are FaaS but don’t be tempted to make it too lean, too many lamba’s becomes hard to manage</li>
+						<ul>
+							<li>Step functions are a way to manage state where lamba's perform complex tasks</li>
+						</ul>
+						<li>If you run multiple repositories think how you will share code</li>
+					</ul>
+				</section>
+				<section>
+					<h1>Lambda's cont</h1>
+					<ul>
+						<li>Know what's going on inside your lambda by logging custom metrics</li>
+						<li>... think of more stuff</li>
+					</ul>
+				</section>
 			</div>
 		</div>
 
